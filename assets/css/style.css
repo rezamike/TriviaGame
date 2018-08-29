@@ -1,0 +1,9 @@
+body {
+    position: relative;
+    box-sizing: border-box;
+}
+
+.triviaBox {
+    text-align: center;
+    border: 4px green solid;
+}
