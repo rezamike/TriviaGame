@@ -46,20 +46,20 @@ $(document).ready(function () {
             // for loop on questions, put in DOM, and check for answer
             for (let j = 0; j < questions[i].choices.length; j++) {
                 $(".choices").append("<ul><input type='radio'> " + questions[i].choices[j] + "</ul>");
-                $("input").attr("name", "crossRef" + 1);
+                $("input").attr("name", "crossRef" + i);
+
+                // function to read radio input
+                $("input[type='radio']").on("click", function checkWin() {
+                    if (($("input[name='crossRef']:checked").val() === questions.choices[j])) {
+                        console.log("fuck you");
+                    }
+                })
 
                 // $( function() {
                 //     $( "input" ).checkboxradio();
                 //   } );
 
             }
-        }
-    }
-
-    // function to read radio input
-    function checkWin() {
-        if (($("input[name='crossRef']:checked").val() === questions.choices[j])) {
-            console.log("fuck you");
         }
     }
 
@@ -99,7 +99,6 @@ $(document).ready(function () {
         wrong = 0;
         unanswered = 0;
 
-        checkWin();
     });
 
 
