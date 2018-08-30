@@ -1,9 +1,29 @@
 body {
     position: relative;
     box-sizing: border-box;
+    background-image: url("../images/movies-tiles.jpg")
+}
+
+row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .triviaBox {
     text-align: center;
     border: 4px green solid;
+    background-color: antiquewhite;
+    margin: 20px 0px 20px 0px;
+    padding: 10px;
+}
+
+.time {
+    padding: 5px;
+    text-align: center;
+}
+
+.choices {
+    padding: 15px 0px 15px 0px;
+    margin: auto;
 }
