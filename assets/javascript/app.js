@@ -46,14 +46,23 @@ $(document).ready(function () {
             // for loop on questions, put in DOM, and check for answer
             for (let j = 0; j < questions[i].choices.length; j++) {
                 $(".choices").append("<ul><input type='radio'> " + questions[i].choices[j] + "</ul>");
-                $("input").attr("name", "crossRef" + i);
+                $("input").attr("name", "check" + j);
+
+                for (k = 0; k < questions[i].correct.length; k++) {
+                    // function to read radio input
+                    $("input[type='radio']").on("click", function checkWin() {
+                        if (($("input[name=check]:checked").val() === questions[i].correct[k])) {
+                            console.log("fuck you");
+                        }
+                    })
+                }
 
                 // function to read radio input
-                $("input[type='radio']").on("click", function checkWin() {
-                    if (($("input[name='crossRef']:checked").val() === questions.choices[j])) {
-                        console.log("fuck you");
-                    }
-                })
+                // $("input[type='radio']").on("click", function checkWin() {
+                //     if (($("input[name='crossRef']:checked").val() === questions[j].correct[i])) {
+                //         console.log("fuck you");
+                //     }
+                // })
 
                 // $( function() {
                 //     $( "input" ).checkboxradio();
@@ -66,8 +75,7 @@ $(document).ready(function () {
     // function for time decrease and time end
     function timeLoss() {
         timer--;
-        $(".time").prepend("<strong>" + timer + "</strong>" + ":" + "<br>");
-        $(".time").hide();
+        $(".time").html("<br><strong>" + ":" + timer + "</strong>" + "<br>");
 
         // if it gets to 0 run stop function
         if (timer === 0) {

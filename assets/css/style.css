@@ -10,6 +10,16 @@ row {
     justify-content: center;
 }
 
+.startButton {
+    margin-top: 25px;
+    padding: 5px;
+}
+
+.time {
+    margin: auto;
+    overflow: auto;
+}
+
 .triviaBox {
     text-align: center;
     border: 4px green solid;
