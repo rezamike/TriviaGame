@@ -38,6 +38,8 @@ $(document).ready(function () {
         intervalId = setInterval(timeLoss, 1000);
     }
 
+    // for loop to cross-check all of the possible 
+
     //  for loop to layer questions into the DOM (append)
     function trivia() {
         for (let i = 0; i < questions.length; i++) {
@@ -45,21 +47,11 @@ $(document).ready(function () {
 
             // for loop on questions, put in DOM, and check for answer
             for (let j = 0; j < questions[i].choices.length; j++) {
-                let newInput = $("<ul><input name='choice" + i + "' class='check" + j + "' type='radio'> " + questions[i].choices[j] + "</ul>");
-                newInput.attr("value", questions[i].choices[j]);
+                let newInput = $("<ul><input name='choice" + i + "' class='check" + j + "' type='radio' value='" + questions[i].choices[j] + "'>" + questions[i].choices[j] + "</ul>");
+                newInput.attr("name", "choice" + j);
                 $(".choices").append(newInput);
                 // let localVar = $("input").attr("name", "choice" + j);
                 // localVar.attr("value", j);
-
-
-                for (k = 0; k < questions[i].correct; k++) {
-                    // function to read radio input
-                    $("input[type=radio]").on("click", function checkWin() {
-                    $("input[type=radio]:checked", ".choices").val()    
-                            console.log("fuck off");
-                        
-                    })
-                }
 
                 // function to read radio input
                 // $("input[type='radio']").on("click", function checkWin() {
@@ -73,6 +65,20 @@ $(document).ready(function () {
                 //   } );
 
             }
+        }
+    }
+
+    // function winGame() {
+    //     for (k = 0; k < questions[i].correct; k++) {
+            // function to read radio input
+            $("input[type=radio]").on("click", checkWin);
+            
+            function checkWin() {
+                for (let k = 0; k < questions[k].correct; k++) {
+                    console.log(3);
+                    if (($("input[name=choice" + k + "]:checked").val()) === questions[k].correct) {
+                    }
+            // })
         }
     }
 
