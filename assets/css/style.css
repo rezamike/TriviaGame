@@ -34,6 +34,7 @@ row {
 }
 
 .choices {
+    height: auto;
     padding: 15px 0px 15px 0px;
     margin: auto;
 }
