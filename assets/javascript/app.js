@@ -45,15 +45,19 @@ $(document).ready(function () {
 
             // for loop on questions, put in DOM, and check for answer
             for (let j = 0; j < questions[i].choices.length; j++) {
-                $(".choices").append("<ul><input type='radio'> " + questions[i].choices[j] + "</ul>");
-                $("input").attr("name", "check" + j);
+                let newInput = $("<ul><input name='choice" + i + "' class='check" + j + "' type='radio'> " + questions[i].choices[j] + "</ul>");
+                newInput.attr("value", questions[i].choices[j]);
+                $(".choices").append(newInput);
+                // let localVar = $("input").attr("name", "choice" + j);
+                // localVar.attr("value", j);
 
-                for (k = 0; k < questions[i].correct.length; k++) {
+
+                for (k = 0; k < questions[i].correct; k++) {
                     // function to read radio input
-                    $("input[type='radio']").on("click", function checkWin() {
-                        if (($("input[name=check]:checked").val() === questions[i].correct[k])) {
-                            console.log("fuck you");
-                        }
+                    $("input[type=radio]").on("click", function checkWin() {
+                    $("input[type=radio]:checked", ".choices").val()    
+                            console.log("fuck off");
+                        
                     })
                 }
 
