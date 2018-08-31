@@ -28,8 +28,9 @@ $(document).ready(function () {
     let right = 0;
     let wrong = 0;
     let unanswered = 0;
-    let timer = 46;
+    let timer = 6;
     let intervalId;
+    let results = right + wrong + unanswered;
 
     // start timer function
     function runTimer() {
@@ -41,6 +42,7 @@ $(document).ready(function () {
 
     //  for loop to layer questions into the DOM (append)
     function trivia() {
+
         for (let i = 0; i < questions.length; i++) {
             $("#choices").append("<br>" + questions[i].question);
 
@@ -52,15 +54,20 @@ $(document).ready(function () {
 
                 $("#choices").find($(".check" + i)).on("click", function () {
                     if ((newInput.find("input[name='choice" + i + "']:checked").val()) === questions[i].correct) {
-                        alert("duh!");
+                        right++;
                     }
+
+                    else if ((newInput.find("input[name='choice" + i + "']:checked").val()) !== questions[i].correct) {
+                        wrong++;
+                    }
+
+                    // else {
+                    //     wrong++;
+                    // }
                 })
             }
             // for (let k = 0; k < questions[k].correct; k++) {
-
             // }
-
-
         }
     }
     // let localVar = $("input").attr("name", "choice" + j);
@@ -80,6 +87,15 @@ $(document).ready(function () {
     // })
     // }
 
+    if (right === 4) {
+        stop();
+        $(".time").hide();
+        $(".questions").hide();
+        $("#choices").hide();
+        $(".results").show();
+        $(".results").append("<div><h2><strong>Resulst: </strong></h2></div>" + "<div><p>Correct: " + right + "</p></div>" + "<div><p>Incorrect: " + wrong + "</p></div>" + "<div><p>Unanswered: " + unanswered + "</p></div>");
+    }
+
     // function for time decrease and time end
     function timeLoss() {
         timer--;
@@ -92,6 +108,8 @@ $(document).ready(function () {
             $(".time").hide();
             $(".questions").hide();
             $("#choices").hide();
+            $(".results").show();
+            $(".results").append("<div><h2><strong>Resulst: </strong></h2></div>" + "<div><p>Correct: " + right + "</p></div>" + "<div><p>Incorrect: " + wrong + "</p></div>" + "<div><p>Unanswered: " + unanswered + "</p></div>");
         }
     }
 
@@ -107,6 +125,7 @@ $(document).ready(function () {
         $("#choices").show();
         $(".time").show();
         $(".startButton").hide();
+        $(".results").hide();
         runTimer();
         trivia();
 
