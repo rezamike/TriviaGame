@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
     // variable for question and answers
-    let questions = [
+    var questions = [
         {
             question: "What film is considered to have the longest one-take in history?",
             choices: ["Russian Ark", "Children of Men", "Birdman", "Lost in London"],
@@ -25,52 +25,73 @@ $(document).ready(function () {
     ]
 
     // variable for wins, losses, quizzes
-    let right = 0;
-    let wrong = 0;
-    let unanswered = 0;
-    let timer = 6;
-    let intervalId;
-    let results = right + wrong + unanswered;
+    var right = 0;
+    var wrong = 0;
+    var unanswered = 0;
+    // var timer = 11;
+    var intervalId;
+    var answers = [];
+    var results = (right + wrong + unanswered);
 
     // start timer function
-    function runTimer() {
-        clearInterval(intervalId);
-        intervalId = setInterval(timeLoss, 1000);
-    }
+    // function runTimer() {
+    //     clearInterval(intervalId);
+    //     intervalId = setInterval(timeLoss, 1000);
+    // }
 
     // for loop to cross-check all of the possible 
 
     //  for loop to layer questions into the DOM (append)
     function trivia() {
 
-        for (let i = 0; i < questions.length; i++) {
-            $("#choices").append("<br>" + questions[i].question);
+        for (var i = 0; i < questions.length; i++) {
+            var questionObject = questions[i];
+            var questionWrap = $("<div>");
+            questionWrap.append("<br>" + "<div>" + questionObject.question + "</div>");
+            $("#questions").append(questionWrap);
+            questionObject.choices.forEach((choice, index) => {
+                var newInput = $(`<ul><input name='choice${index}' class='check${i}' type='radio' value='${choice}'>${choice}</ul>`);
+                questionWrap.append(newInput);
+            })
+
+
+
 
             // for loop on questions, put in DOM, and check for answer
-            for (let j = 0; j < questions[i].choices.length; j++) {
-                let newInput = $("<ul><input name='choice" + i + "' class='check" + i + "' type='radio' value='" + questions[i].choices[j] + "'>" + questions[i].choices[j] + "</ul>");
-                newInput.find("input[class='check" + j + "']").attr("name", "choice" + i);
-                $("#choices").append(newInput);
+            // for (var j = 0; j < questionObject.choices.length; j++) {
+            //     var newInput = $(`<ul><input name='choice${j}' class='check${i}' type='radio' value='${questionObject.choices[j]}'>${questionObject.choices[j]}</ul>`);
+            //     console.dir(newInput)
+            //     // newInput.find(`input[class='check"${j}]`).attr("name", `choice${i}`);
+            //     $("#questions").append(newInput);
 
-                $("#choices").find($(".check" + i)).on("click", function () {
-                    if ((newInput.find("input[name='choice" + i + "']:checked").val()) === questions[i].correct) {
-                        right++;
-                    }
+            //     $("#choices").find($(".check" + i)).on("click", function () {
+            //         if ((newInput.find("input[name='choice" + i + "']:checked").val()) === questionObject.correct) {
+            //             right++;
+            //             console.log(2);
+            //         }
+            //         // else {
+            //         //     wrong++;
+            //         // }
+            //     })
 
-                    else if ((newInput.find("input[name='choice" + i + "']:checked").val()) !== questions[i].correct) {
-                        wrong++;
-                    }
-
-                    // else {
-                    //     wrong++;
-                    // }
-                })
-            }
-            // for (let k = 0; k < questions[k].correct; k++) {
+            //     $("#choices").find($(".check" + i)).on("click", function () {
+            //         answers.push(newInput.find("input[name='choice" + i + "']:checked").val());
+            //     })
+            // }
+            // for (var k = 0; k < questions[k].correct; k++) {
             // }
         }
     }
-    // let localVar = $("input").attr("name", "choice" + j);
+
+    function checkAns() {
+            for (var l = 0; l < questions.length; l++) {
+                if (answers[l] !== questions[l].correct) {
+                    wrong++;
+                    console.log(wrong);
+                }
+            }
+    }
+    // var localVar = $("input").attr("name", "choice" + j);
     // localVar.attr("value", j);
 
     // function to read radio input
@@ -87,14 +108,14 @@ $(document).ready(function () {
     // })
     // }
 
-    if (right === 4) {
-        stop();
-        $(".time").hide();
-        $(".questions").hide();
-        $("#choices").hide();
-        $(".results").show();
-        $(".results").append("<div><h2><strong>Resulst: </strong></h2></div>" + "<div><p>Correct: " + right + "</p></div>" + "<div><p>Incorrect: " + wrong + "</p></div>" + "<div><p>Unanswered: " + unanswered + "</p></div>");
-    }
+    // if (right === 4) {
+    //     stop();
+    //     $(".time").hide();
+    //     $(".questions").hide();
+    //     $("#choices").hide();
+    //     $(".results").show();
+    //     $(".results").append("<div><h2><strong>Resulst: </strong></h2></div>" + "<div><p>Correct: " + right + "</p></div>" + "<div><p>Incorrect: " + wrong + "</p></div>" + "<div><p>Unanswered: " + unanswered + "</p></div>");
+    // }
 
     // function for time decrease and time end
     function timeLoss() {
@@ -102,12 +123,12 @@ $(document).ready(function () {
         $(".time").html("<br><strong>" + ":" + timer + "</strong>" + "<br>");
 
         // if it gets to 0 run stop function
-        if (timer === 0) {
+        if (timer === 0 || right === 4) {
             // stops the main timer function and hides elements to prep for result screen
             stop();
             $(".time").hide();
             $(".questions").hide();
-            $("#choices").hide();
+            $("#questions").hide();
             $(".results").show();
             $(".results").append("<div><h2><strong>Resulst: </strong></h2></div>" + "<div><p>Correct: " + right + "</p></div>" + "<div><p>Incorrect: " + wrong + "</p></div>" + "<div><p>Unanswered: " + unanswered + "</p></div>");
         }
@@ -122,11 +143,12 @@ $(document).ready(function () {
     // create function for removing Start button
     $(".startButton").on("click", function init() {
         $(".questions").show();
-        $("#choices").show();
+        $("#questions").show();
         $(".time").show();
         $(".startButton").hide();
         $(".results").hide();
-        runTimer();
+        checkAns();
+        // runTimer();
         trivia();
 
         // resets errything
